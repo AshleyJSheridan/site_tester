@@ -1,0 +1,22 @@
+{
+	"name": "ash/site_tester",
+	"description": "CLI script to test some elements of a website",
+	"type": "project",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ashley Sheridan",
+			"email": "ash@ashleysheridan.co.uk"
+		}
+	],
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Tester\\WebContent\\": "src/WebContent/",
+			"Tester\\ContentLists\\": "src/ContentLists/",
+			"Tester\\Exceptions\\": "src/Exceptions",
+			"Tester\\Tests\\": "src/Tests",
+			"Tester\\Entities\\": "src/Entities"
+		}
+	}
+}
