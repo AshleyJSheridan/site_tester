@@ -34,7 +34,7 @@ class BasicCSSTests extends BaseTest
 			$this->{$test_method}($content);
 		}
 		
-		var_dump($this->issues_list);
+		//svar_dump($this->issues_list);
 		
 		$this->content = null;
 		$this->parsed_content = null;
@@ -265,6 +265,54 @@ class BasicCSSTests extends BaseTest
 					"Found $chained_classes_count chained class selectors",
 					$this->content->get_url(),
 					'specificity',
+					'warning'
+				)
+			);
+		}
+	}
+	
+	public function test_duplicate_selectors()
+	{
+		$selector_list = [];
+		$selector_duplicates = 0;
+		$selectors = $this->parsed_content->getAllSelectors();
+		
+		foreach($selectors as $declaration_block)
+		{
+			$selector = $declaration_block->getSelector()[0]->getSelector();
+			
+			$selector_list[] = $selector;
+		}
+		
+		$selectors_counts = array_count_values($selector_list);
+		
+		foreach($selectors_counts as $selector => $count)
+		{
+			if($count > 1)
+			{
+				$selector_duplicates += $count;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"The selector '$selector' was found $count times",
+							$this->content->get_url(),
+							'maintainability',
+							'warning'
+						)
+					);
+				}
+			}
+		}
+		
+		if($selector_duplicates)
+		{
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"$selector_duplicates duplicate selectors found",
+					$this->content->get_url(),
+					'maintainability',
 					'warning'
 				)
 			);
