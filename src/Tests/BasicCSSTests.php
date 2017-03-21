@@ -34,7 +34,7 @@ class BasicCSSTests extends BaseTest
 			$this->{$test_method}($content);
 		}
 		
-		//var_dump($this->issues_list);
+		var_dump($this->issues_list);
 		
 		$this->content = null;
 		$this->parsed_content = null;
@@ -83,11 +83,32 @@ class BasicCSSTests extends BaseTest
 			$selector = $declaration_block->getSelector()[0]->getSelector();
 			
 			if(strstr($selector, '#') )
+			{
 				$id_count ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"Styling by ID: $selector",
+							$this->content->get_url(),
+							'specificity'
+						)
+					);
+				}
+			}
 		}
 		
 		if($id_count)
-			$this->issues_list->add_issue(new CSSIssue("$id_count uses of styling by ID found", $this->content->get_url(), 'specificity' ) );
+		{
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"$id_count uses of styling by ID found",
+					$this->content->get_url(),
+					'specificity'
+				)
+			);
+		}
 	}
 	
 	public function test_selector_depth()
@@ -107,7 +128,20 @@ class BasicCSSTests extends BaseTest
 				$longest_depth = count($tokens);
 			
 			if(count($tokens) > $depth_threshold)
+			{
 				$selectors_over_threshold ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"Selector threshold depth exceeded with $selector",
+							$this->content->get_url(),
+							'specificity'
+						)
+					);
+				}
+			}
 		}
 		
 		if($longest_depth > $depth_threshold)
@@ -130,13 +164,29 @@ class BasicCSSTests extends BaseTest
 			$rule = $declaration_block->getRules()[0]->getRule();
 			
 			if($rule == 'background')
+			{
 				$background_shorthand_count ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$selector = $declaration_block->getRules()[0]->getSelector();
+					
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"background shorthand used in $selector",
+							$this->content->get_url(),
+							'maintainability',
+							'warning'
+						)
+					);
+				}
+			}
 		}
 		
 		if($background_shorthand_count)
 			$this->issues_list->add_issue(
 				new CSSIssue(
-					"$background_shorthand_count occurances of background shorthand rule found",
+					"$background_shorthand_count occurances of 'background' shorthand rule found",
 					$this->content->get_url(),
 					'maintainability',
 					'warning'
@@ -155,7 +205,20 @@ class BasicCSSTests extends BaseTest
 			$selector = $declaration_block->getSelector()[0]->getSelector();
 			
 			if(strstr($selector, '*') )
+			{
 				$selectors_over_threshold ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"Key selector * used in $selector",
+							$this->content->get_url(),
+							'performance'
+						)
+					);
+				}
+			}
 		}
 		
 		if($selectors_over_threshold > $frequency_threshold)
@@ -170,7 +233,7 @@ class BasicCSSTests extends BaseTest
 	
 	public function test_chained_classes()
 	{
-		$chained_classes = false;
+		$chained_classes_count = 0;
 		$selectors = $this->parsed_content->getAllSelectors();
 		
 		foreach($selectors as $declaration_block)
@@ -179,16 +242,32 @@ class BasicCSSTests extends BaseTest
 			
 			if(preg_match('/\.[^\. ]+\./', $selector) )
 			{
-				$this->issues_list->add_issue(
-					new CSSIssue(
-						"Chained class selectors",
-						$this->content->get_url(),
-						'specificity',
-						'warning'
-					)
-				);
+				$chained_classes_count ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"Chained class selectors in $selector",
+							$this->content->get_url(),
+							'specificity',
+							'warning'
+						)
+					);
+				}
 			}
-			
+		}
+		
+		if($chained_classes_count)
+		{
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"Found $chained_classes_count chained class selectors",
+					$this->content->get_url(),
+					'specificity',
+					'warning'
+				)
+			);
 		}
 	}
 }
