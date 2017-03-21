@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Tester\\WebContent\\' => array($baseDir . '/src/WebContent'),
     'Tester\\Tests\\' => array($baseDir . '/src/Tests'),
+    'Tester\\Helpers\\' => array($baseDir . '/src/Helpers'),
     'Tester\\Exceptions\\' => array($baseDir . '/src/Exceptions'),
     'Tester\\Entities\\' => array($baseDir . '/src/Entities'),
     'Tester\\ContentLists\\' => array($baseDir . '/src/ContentLists'),

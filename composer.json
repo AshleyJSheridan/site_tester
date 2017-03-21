@@ -18,7 +18,8 @@
 			"Tester\\ContentLists\\": "src/ContentLists/",
 			"Tester\\Exceptions\\": "src/Exceptions",
 			"Tester\\Tests\\": "src/Tests",
-			"Tester\\Entities\\": "src/Entities"
+			"Tester\\Entities\\": "src/Entities",
+			"Tester\\Helpers\\": "src/Helpers"
 		}
 	}
 }

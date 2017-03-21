@@ -11,6 +11,7 @@ class ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221
         array (
             'Tester\\WebContent\\' => 18,
             'Tester\\Tests\\' => 13,
+            'Tester\\Helpers\\' => 15,
             'Tester\\Exceptions\\' => 18,
             'Tester\\Entities\\' => 16,
             'Tester\\ContentLists\\' => 20,
@@ -25,6 +26,10 @@ class ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221
         'Tester\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Tests',
+        ),
+        'Tester\\Helpers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Helpers',
         ),
         'Tester\\Exceptions\\' => 
         array (
