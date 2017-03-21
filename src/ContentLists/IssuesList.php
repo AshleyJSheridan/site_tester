@@ -4,7 +4,7 @@ namespace Tester\ContentLists;
 /**
  * Description of IssuesList
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class IssuesList extends \SplDoublyLinkedList
 {

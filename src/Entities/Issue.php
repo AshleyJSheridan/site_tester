@@ -4,7 +4,7 @@ namespace Tester\Entities;
 /**
  * Description of Issue
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class Issue
 {

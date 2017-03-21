@@ -5,7 +5,7 @@ namespace Tester\ContentLists;
 /**
  * Description of ResourceLister
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class ResourceLister
 {

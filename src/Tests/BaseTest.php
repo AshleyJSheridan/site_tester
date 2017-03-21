@@ -4,7 +4,7 @@ namespace Tester\Tests;
 /**
  * Description of BaseTest
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 abstract class BaseTest
 {

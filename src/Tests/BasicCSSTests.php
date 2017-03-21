@@ -5,8 +5,11 @@ use Tester\Entities\CSSIssue;
 
 /**
  * Description of BasicCSSTests
+ * tests based on:
+ * * http://cssguidelin.es/
+ * * https://csswizardry.com/2017/02/code-smells-in-css-revisited/
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class BasicCSSTests extends BaseTest
 {
@@ -163,5 +166,29 @@ class BasicCSSTests extends BaseTest
 					'performance'
 				)
 			);
+	}
+	
+	public function test_chained_classes()
+	{
+		$chained_classes = false;
+		$selectors = $this->parsed_content->getAllSelectors();
+		
+		foreach($selectors as $declaration_block)
+		{
+			$selector = $declaration_block->getSelector()[0]->getSelector();
+			
+			if(preg_match('/\.[^\. ]+\./', $selector) )
+			{
+				$this->issues_list->add_issue(
+					new CSSIssue(
+						"Chained class selectors",
+						$this->content->get_url(),
+						'specificity',
+						'warning'
+					)
+				);
+			}
+			
+		}
 	}
 }

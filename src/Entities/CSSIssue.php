@@ -4,7 +4,7 @@ namespace Tester\Entities;
 /**
  * Description of CSSIssue
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class CSSIssue extends Issue
 {

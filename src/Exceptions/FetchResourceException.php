@@ -5,7 +5,7 @@ namespace Tester\Exceptions;
 /**
  * Description of FetchResourceException
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class FetchResourceException extends \Exception
 {

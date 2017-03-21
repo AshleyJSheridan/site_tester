@@ -5,7 +5,7 @@ namespace Tester\ContentLists;
 /**
  * Description of CSSList
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class CSSList extends \SplDoublyLinkedList
 {

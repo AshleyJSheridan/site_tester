@@ -4,7 +4,7 @@ namespace Tester\WebContent;
 /**
  * Description of WebPageContent
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class WebPageContent extends WebContent
 {

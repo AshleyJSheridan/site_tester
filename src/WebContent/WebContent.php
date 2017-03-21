@@ -4,7 +4,7 @@ namespace Tester\WebContent;
 /**
  * Description of WebContent
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 abstract class WebContent
 {

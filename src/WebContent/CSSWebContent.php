@@ -5,7 +5,7 @@ namespace Tester\WebContent;
 /**
  * Description of CSSWebContent
  *
- * @author ash
+ * @author Ashley Sheridan
  */
 class CSSWebContent extends WebContent
 {
