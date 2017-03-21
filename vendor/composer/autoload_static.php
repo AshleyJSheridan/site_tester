@@ -40,11 +40,22 @@ class ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

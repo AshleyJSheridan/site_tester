@@ -9,7 +9,9 @@
 			"email": "ash@ashleysheridan.co.uk"
 		}
 	],
-	"require": {},
+	"require": {
+		"sabberworm/php-css-parser": "*"
+	},
 	"autoload": {
 		"psr-4": {
 			"Tester\\WebContent\\": "src/WebContent/",
