@@ -22,3 +22,6 @@ foreach($page->get_css_links() as $css_resource)
 	$css_tests->run_tests($css_resource);
 }
 
+$issues_output = $issues->get_issues_as_string_list();
+
+var_dump($issues_output);

@@ -34,9 +34,7 @@ class BasicCSSTests extends BaseTest
 		{
 			$this->{$test_method}($content);
 		}
-		
-		//svar_dump($this->issues_list);
-		
+
 		$this->content = null;
 		$this->parsed_content = null;
 	}
