@@ -337,4 +337,43 @@ class BasicCSSTests extends BaseTest
 			);
 		}
 	}
+	
+	public function test_colours_used()
+	{
+		$colours = [];
+		// unfortunately the parser can't be used for this test as it doesn't appear to capture rules like box-shadow, etc
+		/*$rules = $this->parsed_content->getAllRuleSets();
+		
+		foreach($rules as $declaration_block)
+		{
+			$rule = $declaration_block->getRules()[0]->getRule();
+			
+			if(preg_match('/^(background(-color)?$|color|(box|text)-shadow|(border|outline)(top|left|bottom|right)?(-color)?)/', $rule) )
+				echo $rule;
+
+		}*/
+
+		// this is as neat as I could make a regex to find properties that can have colours
+		// even ignoring vendor-specific prefixes, I'm sure I've missed some...
+		$rule_regex = '/\b(background(?:-color)?|color|(?:box|text)-shadow|(?:border|outline)(?:top|left|bottom|right)?(?:-color)?)\s*:\s*([^;]+?);/m';
+		
+		// ugly regex which should match against the majority of colours, with the obvious exception of named colours
+		$colour_regex = '/((?:rgba?|hsl)\([^\)]+?\))|(\#(?:[0-9a-f]{6}|[0-9a-f]{3}))/';
+		
+		preg_match_all($rule_regex, $this->content, $matches);
+		
+		if(count($matches) )
+		{
+			foreach($matches[2] as $rule_value)
+			{
+				preg_match_all($colour_regex, $rule_value, $colour_matches);
+				
+				if(count($colour_matches) )
+					$colours[] = $colour_matches[0];
+				//var_dump($colour_matches);
+			}
+		}
+		
+		var_dump($colours);
+	}
 }
