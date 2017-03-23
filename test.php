@@ -12,16 +12,10 @@ $page->fetch_css_content_from_source();
 // set up empty issues object that all tests can add to and specify whether verbose detailed issues should be allowed or not
 $issues = new \Tester\ContentLists\IssuesList(false);
 
-// set up CSS tests with the issues object that will contain any reported issues
-$css_tests = new \Tester\Tests\BasicCSSTests($issues);
+$test_class_searcher = new \Tester\Helpers\TestClassSearcher();
+$test_class_searcher->run_css_tests($page->get_css_links(), $issues);
 
-
-// run CSS tests
-foreach($page->get_css_links() as $css_resource)
-{
-	$css_tests->run_tests($css_resource);
-}
 
 $issues_output = $issues->get_issues_as_string_list();
 
-var_dump($issues_output);
+echo $issues_output;
