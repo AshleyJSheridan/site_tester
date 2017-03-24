@@ -24,21 +24,4 @@ abstract class BaseTest
 		
 		return $tests;
 	}
-	
-	public function run_tests(\Tester\WebContent\CSSWebContent $content)
-	{
-		$this->content = $content;
-		$parser = new \Sabberworm\CSS\Parser($content);
-		$this->parsed_content = $parser->parse();
-		
-		$test_methods = $this->get_test_methods();
-		
-		foreach($test_methods as $test_method)
-		{
-			$this->{$test_method}($content);
-		}
-
-		$this->content = null;
-		$this->parsed_content = null;
-	}
 }

@@ -14,6 +14,23 @@ use Tester\Helpers\HumanByteSize;
  */
 class BasicCSSTests extends BaseTest
 {
+	public function run_tests(\Tester\WebContent\CSSWebContent $content)
+	{
+		$this->content = $content;
+		$parser = new \Sabberworm\CSS\Parser($content);
+		$this->parsed_content = $parser->parse();
+		
+		$test_methods = $this->get_test_methods();
+		
+		foreach($test_methods as $test_method)
+		{
+			$this->{$test_method}($content);
+		}
+
+		$this->content = null;
+		$this->parsed_content = null;
+	}
+	
 	public function test_size()
 	{
 		$size_threshold = 50 * 1024;

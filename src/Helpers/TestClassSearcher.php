@@ -48,6 +48,26 @@ class TestClassSearcher
 		}
 	}
 	
+	public function run_html_tests($content, $issues_list)
+	{
+		foreach($this->get_test_classes() as $test_class)
+		{
+			if(!stristr($test_class->getFilename(), 'html') )
+				continue;
+			
+			$extension = $test_class->getExtension();
+			$class_name = $test_class->getBasename(".$extension");
+
+			$namespaced_class = "\\Tester\\Tests\\$class_name";
+			$tester = new $namespaced_class($issues_list);
+			
+			if(!method_exists($tester, 'run_tests') )
+				throw new MethodException("The 'run_tests()' method of the $namespaced_class does not exist");
+					
+			$tester->run_tests($content);
+		}
+	}
+
 	private function search_and_add_test_classes()
 	{
 		$dir = new \RecursiveDirectoryIterator($this->test_dir);
