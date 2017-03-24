@@ -13,6 +13,8 @@ class WebPageContent extends WebContent
 	public function __construct($url)
 	{
 		parent::__construct($url);
+		
+		$this->fetch_css_content_from_source();
 	}
 
 	public function fetch_css_content_from_source()

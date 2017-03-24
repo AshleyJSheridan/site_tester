@@ -14,31 +14,6 @@ use Tester\Helpers\HumanByteSize;
  */
 class BasicCSSTests extends BaseTest
 {
-	private $content;
-	private $parsed_content;
-	
-	public function __construct(\Tester\ContentLists\IssuesList &$issues_list)
-	{
-		parent::__construct($issues_list);
-	}
-	
-	public function run_tests(\Tester\WebContent\CSSWebContent $content)
-	{
-		$this->content = $content;
-		$parser = new \Sabberworm\CSS\Parser($content);
-		$this->parsed_content = $parser->parse();
-		
-		$test_methods = $this->get_test_methods();
-		
-		foreach($test_methods as $test_method)
-		{
-			$this->{$test_method}($content);
-		}
-
-		$this->content = null;
-		$this->parsed_content = null;
-	}
-
 	public function test_size()
 	{
 		$size_threshold = 50 * 1024;
@@ -340,7 +315,7 @@ class BasicCSSTests extends BaseTest
 	
 	public function test_colours_used()
 	{
-		$colour_count_threshold = 12;
+		$colour_count_threshold = 10;
 		$colours = new \Tester\ContentLists\ColourList();
 		// unfortunately the parser can't be used for this test as it doesn't appear to capture rules like box-shadow, etc
 
