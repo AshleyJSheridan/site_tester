@@ -340,18 +340,9 @@ class BasicCSSTests extends BaseTest
 	
 	public function test_colours_used()
 	{
-		$colours = [];
+		$colour_count_threshold = 12;
+		$colours = new \Tester\ContentLists\ColourList();
 		// unfortunately the parser can't be used for this test as it doesn't appear to capture rules like box-shadow, etc
-		/*$rules = $this->parsed_content->getAllRuleSets();
-		
-		foreach($rules as $declaration_block)
-		{
-			$rule = $declaration_block->getRules()[0]->getRule();
-			
-			if(preg_match('/^(background(-color)?$|color|(box|text)-shadow|(border|outline)(top|left|bottom|right)?(-color)?)/', $rule) )
-				echo $rule;
-
-		}*/
 
 		// this is as neat as I could make a regex to find properties that can have colours
 		// even ignoring vendor-specific prefixes, I'm sure I've missed some...
@@ -364,16 +355,44 @@ class BasicCSSTests extends BaseTest
 		
 		if(count($matches) )
 		{
-			foreach($matches[2] as $rule_value)
+			for($i=0; $i<count($matches[1]); $i++)
 			{
+				$rule = $matches[1][$i];
+				$rule_value = $matches[2][$i];
+				
+				//var_dump($rule_value);
 				preg_match_all($colour_regex, $rule_value, $colour_matches);
 				
-				if(count($colour_matches) )
-					$colours[] = $colour_matches[0];
-				//var_dump($colour_matches);
+				if(count($colour_matches[0]) )
+				{
+					foreach($colour_matches[0] as $colour)
+						$colours->add_colour(new \Tester\Entities\Colour($colour, $rule) );
+				}
 			}
 		}
+
+		$colours_total = $colours->get_total();
 		
-		var_dump($colours);
+		if($colours_total > $colour_count_threshold)
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"More than $colour_count_threshold colours used: found $colours_total",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+		
+		if($colours_total > $colour_count_threshold && $this->issues_list->get_verbose() )
+		{
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"All colours used: {$colours->get_colour_count_as_string()}",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+		}
 	}
 }
