@@ -15,6 +15,7 @@ class WebPageContent extends WebContent
 		parent::__construct($url);
 		
 		$this->fetch_css_content_from_source();
+		$this->fetch_js_content_from_source();
 	}
 
 	public function fetch_css_content_from_source()
@@ -22,11 +23,13 @@ class WebPageContent extends WebContent
 		$this->css_content = \Tester\ContentLists\ResourceLister::get_css_links_from_content($this->get_content(), $this->get_url() );
 	}
 
+	public function fetch_js_content_from_source()
+	{
+		$this->js_content = \Tester\ContentLists\ResourceLister::get_js_links_from_content($this->get_content(), $this->get_url() );
+	}
+
 	public function get_css_links()
 	{
-		if(is_null($this->css_content) )
-			throw new \Tester\Exceptions\FetchResourceException('CSS not fetched but CSS was requested');
-		else
-			return $this->css_content;
+		return $this->css_content;
 	}
 }

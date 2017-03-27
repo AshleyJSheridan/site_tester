@@ -29,8 +29,33 @@ class ResourceLister
 					$css_list->push(new \Tester\WebContent\CSSWebContent($base_url . $divider . $css_link) );
 				}
 			}
-
-			return $css_list;
 		}
+		
+		return $css_list;
+	}
+	
+	public static function get_js_links_from_content($content, $base_url)
+	{
+		$js_list = new JSList();
+		
+		preg_match_all('/<script.+"([^"]+\.js)"/', $content, $matches);
+		
+		if($matches)
+		{
+			foreach($matches[1] as $js_link)
+			{
+				if(preg_match('/^https?\:\/\//', $js_link) )
+				{
+					$js_list->push(new \Tester\WebContent\JSWebContent($css_link) );
+				}
+				else
+				{
+					$divider = substr($js_link, 0, 1) == '/'?'':'/';
+					$js_list->push(new \Tester\WebContent\JSWebContent($base_url . $divider . $js_link) );
+				}
+			}
+		}
+		
+		return $js_list;
 	}
 }
