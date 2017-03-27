@@ -209,4 +209,22 @@ class BasicHTMLTests extends BaseTest
 			}
 		}
 	}
+	
+	public function test_css_links()
+	{
+		$css_link_count_threshold = 2;
+		$total_css_links = count($this->content->get_css_links() );
+		
+		if($total_css_links > $css_link_count_threshold)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"The total number of linked CSS files exceeds the threshold of $css_link_count_threshold; found $total_css_links",
+					$this->content->get_url(),
+					'performance',
+					'warning'
+				)
+			);
+		}
+	}
 }
