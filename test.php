@@ -2,7 +2,7 @@
 <?php
 $loader = require __DIR__ . '/vendor/autoload.php';
 
-$url = 'http://www.ashleysheridan.co.uk';
+$url = 'http://www.ashleysheridan.co.uk/blog/Manual+Vs+Automated+Testing';
 
 // get remote page and linked content
 $page = new \Tester\WebContent\WebPageContent($url);
