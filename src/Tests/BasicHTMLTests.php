@@ -262,7 +262,60 @@ class BasicHTMLTests extends BaseTest
 				)
 			);
 		}
+	}
+	
+	public function test_inline_scripts()
+	{
+		$total_js_links = count($this->content->get_js_links() );
+
+		$all_scripts = $this->parsed_content->getElementsByTagName('script');
+
+		if($all_scripts->length > $total_js_links)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"Inline <script> tags found",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+		}
+	}
+	
+	public function test_inline_style_blocks()
+	{
+		$style_blocks = $this->parsed_content->getElementsByTagName('style');
 		
+		if($style_blocks->length > 0)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"Inline <style> blocks found",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+		}
+	}
+	
+	public function test_inline_styles()
+	{
+		$xpath = new \DOMXpath($this->parsed_content);
 		
+		$elements = $xpath->query("//*[@style]");
+		
+		if($elements->length > 0)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"Inline styles found on tags",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+		}
 	}
 }
