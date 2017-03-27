@@ -15,7 +15,7 @@ class ResourceLister
 
 		preg_match_all('/<link.+"([^"]+\.css)"/', $content, $matches);
 
-		if($matches)
+		if(!empty($matches[1]) )
 		{
 			foreach($matches[1] as $css_link)
 			{
@@ -40,7 +40,7 @@ class ResourceLister
 		
 		preg_match_all('/<script.+"([^"]+\.js)"/', $content, $matches);
 		
-		if($matches)
+		if(!empty($matches[1]) )
 		{
 			foreach($matches[1] as $js_link)
 			{
