@@ -9,6 +9,7 @@ namespace Tester\WebContent;
 class WebPageContent extends WebContent
 {
 	private $css_content;
+	private $js_content;
 
 	public function __construct($url)
 	{
@@ -31,5 +32,10 @@ class WebPageContent extends WebContent
 	public function get_css_links()
 	{
 		return $this->css_content;
+	}
+	
+	public function get_js_links()
+	{
+		return $this->js_content;
 	}
 }

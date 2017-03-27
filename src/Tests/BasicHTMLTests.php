@@ -213,18 +213,56 @@ class BasicHTMLTests extends BaseTest
 	public function test_css_links()
 	{
 		$css_link_count_threshold = 2;
-		$total_css_links = count($this->content->get_css_links() );
+		$css_links = $this->content->get_css_links();
+		$total_css_links = count($css_links);
 		
 		if($total_css_links > $css_link_count_threshold)
 		{
+			$issue_message = "The total number of linked CSS files exceeds the threshold of $css_link_count_threshold; found $total_css_links";
+			
+			if($this->issues_list->get_verbose() )
+			{
+				foreach($css_links as $css_link)
+					$issue_message .= "\n* " . $css_link->get_url();
+			}
+			
 			$this->issues_list->add_issue(
 				new HTMLIssue(
-					"The total number of linked CSS files exceeds the threshold of $css_link_count_threshold; found $total_css_links",
+					$issue_message,
 					$this->content->get_url(),
 					'performance',
 					'warning'
 				)
 			);
 		}
+	}
+	
+	public function test_js_links()
+	{
+		$js_link_count_threshold = 3;
+		$js_links = $this->content->get_js_links();
+		$total_js_links = count($js_links);
+		
+		if($total_js_links > $js_link_count_threshold)
+		{
+			$issue_message = "The total number of linked JS files exceeds the threshold of $js_link_count_threshold; found $total_js_links";
+			
+			if($this->issues_list->get_verbose() )
+			{
+				foreach($js_links as $js_link)
+					$issue_message .= "\n* " . $js_link->get_url();
+			}
+			
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					$issue_message,
+					$this->content->get_url(),
+					'performance',
+					'warning'
+				)
+			);
+		}
+		
+		
 	}
 }

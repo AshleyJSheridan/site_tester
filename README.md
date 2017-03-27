@@ -22,4 +22,5 @@ Currently this is still in development, and some CSS & HTML tests are included:
 * Check for title, header, and nav tags
 * Navigation check by tag or role
 * Header hierarchy check
-
+* Test number of includes CSS files against threshold (default limit is 2)
+* Test number of includes JS files against threshold (default limit is 3)
