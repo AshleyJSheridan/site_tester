@@ -120,4 +120,68 @@ class BasicHTMLAccessibilityTests extends BaseTest
 			);
 		}
 	}
+	
+	public function test_b_elements()
+	{
+		$b_elements = $this->parsed_content->getElementsByTagName('b');
+		
+		if($b_elements->length > 0)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"Old-style bold <b> tags found; non-semantic",
+					$this->content->get_url(),
+					'accessibility'
+				)
+			);
+			
+			if($this->issues_list->get_verbose() )
+			{
+				foreach($b_elements as $bold_tag)
+				{
+					$bold_html = $bold_tag->ownerDocument->saveHTML($bold_tag);
+
+					$this->issues_list->add_issue(
+						new HTMLIssue(
+							"Old-style bold <b> tag: $bold_html",
+							$this->content->get_url(),
+							'accessibility'
+						)
+					);
+				}
+			}
+		}
+	}
+	
+	public function test_i_elements()
+	{
+		$i_elements = $this->parsed_content->getElementsByTagName('i');
+		
+		if($i_elements->length > 0)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"Old-style italic <i> tags found; non-semantic",
+					$this->content->get_url(),
+					'accessibility'
+				)
+			);
+			
+			if($this->issues_list->get_verbose() )
+			{
+				foreach($i_elements as $italic_tag)
+				{
+					$italic_html = $italic_tag->ownerDocument->saveHTML($italic_tag);
+
+					$this->issues_list->add_issue(
+						new HTMLIssue(
+							"Old-style italic <i> tag: $italic_html",
+							$this->content->get_url(),
+							'accessibility'
+						)
+					);
+				}
+			}
+		}
+	}
 }

@@ -28,3 +28,4 @@ Currently this is still in development, and some CSS & HTML tests are included:
 * Check images contain alt text
 * Identify repetition of words in content above threshold (defaults to 30%)
 * Identify frequency of words above an average word length (average defaults to 5.1 https://arxiv.org/pdf/1208.6109.pdf)
+* Tests for presence of old style bold and italic tags in content
