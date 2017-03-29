@@ -24,3 +24,7 @@ Currently this is still in development, and some CSS & HTML tests are included:
 * Header hierarchy check
 * Test number of includes CSS files against threshold (default limit is 2)
 * Test number of includes JS files against threshold (default limit is 3)
+* Check for inline styles, both in style blocks and attached to the style attribute
+* Check images contain alt text
+* Identify repetition of words in content above threshold (defaults to 30%)
+* Identify frequency of words above an average word length (average defaults to 5.1 https://arxiv.org/pdf/1208.6109.pdf)
