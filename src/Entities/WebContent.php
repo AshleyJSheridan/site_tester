@@ -29,6 +29,11 @@ class WebContent
 		return $this->headers;
 	}
 	
+	public function get_header($header)
+	{
+		return $this->headers->get_header($header);
+	}
+	
 	public function get_body()
 	{
 		return $this->body;

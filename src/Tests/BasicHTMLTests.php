@@ -318,4 +318,39 @@ class BasicHTMLTests extends BaseTest
 			);
 		}
 	}
+	
+	public function test_page_age()
+	{
+		$recent_threshold_days = 30;
+		$recent_threshold = 60 * 60 * 24 * $recent_threshold_days;
+		$last_modified = strtotime($this->content->get_header('Last-Modified') );
+
+		// attempt to fetch a date from meta tags if the Last-Modified header is not set
+		if(!$last_modified)
+		{
+			$meta_tags = $this->parsed_content->getElementsByTagName('meta');
+			
+			foreach($meta_tags as $meta)
+			{
+				$meta_name = $meta->hasAttribute('name')?$meta->getAttribute('name'):null;
+				
+				if($meta_name && preg_match('/dc\.(created|modified)/i', $meta_name) && $meta->hasAttribute('content') )
+					$last_modified = strtotime($meta->getAttribute('content') );
+			}
+		}
+		
+		if(!$last_modified || (time() - $last_modified) < $recent_threshold)
+		{
+			$apparent_age = date("Y-m-d H:i:s", $last_modified);
+			
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"The apparent age of this document ($apparent_age) appears to be older than the threshold of $recent_threshold_days days",
+					$this->content->get_url(),
+					'interest',
+					'warning'
+				)
+			);
+		}
+	}
 }

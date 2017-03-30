@@ -11,7 +11,6 @@ abstract class WebContent
 {
 	private $url;
 	private $content;
-	private $headers;
 	private $status_code;
 	private $header_size = 0;
 	private $size = 0;
@@ -19,7 +18,6 @@ abstract class WebContent
 	public function __construct($url)
 	{
 		$this->url = $url;
-		$this->headers = new HeaderList();
 		$this->retrieve_and_set_content();
 		$this->size = strlen($this->content);
 	}
@@ -43,6 +41,11 @@ abstract class WebContent
 	{
 		return $this->content;
 	}
+	
+	public function get_header($header)
+	{
+		return $this->content->get_header($header);
+	}
 
 	private function retrieve_and_set_content()
 	{
@@ -64,8 +67,8 @@ abstract class WebContent
 		
 		$this->header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 		$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$headers = $this->get_headers($content);
-		
+		$headers = $this->fetch_headers($content);
+
 		curl_close($ch);
 
 		$this->content = new \Tester\Entities\WebContent($this->get_body($content), $headers, $status_code);
@@ -77,7 +80,7 @@ abstract class WebContent
 		return substr($content, $this->header_size);
 	}
 	
-	private function get_headers($content)
+	private function fetch_headers($content)
 	{
 		$headers_list = new HeaderList();
 		$raw_headers = substr($content, 0, $this->header_size);
@@ -88,8 +91,8 @@ abstract class WebContent
 		{
 			for($i=0; $i<count($headers[1]); $i++)
 			{
-				$header_key = $headers[1][$i];
-				$header_value = $headers[2][$i];
+				$header_key = trim($headers[1][$i]);
+				$header_value = trim($headers[2][$i]);
 				
 				$headers_list->add_header(new \Tester\Entities\Header($header_key, $header_value) );
 			}

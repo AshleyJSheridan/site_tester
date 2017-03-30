@@ -30,4 +30,25 @@ class HeaderList extends \SplDoublyLinkedList
 		
 		return $header_string;
 	}
+	
+	public function get_header($header)
+	{
+		$this->rewind();
+		$header_value = null;
+
+		while($this->valid() )
+		{
+			$current_header =  $this->current();
+			
+			if($current_header->get_header() == $header)
+			{
+				$header_value = $current_header->get_value();
+				break;
+			}
+			
+			$this->next();
+		}
+		
+		return $header_value;
+	}
 }
