@@ -71,7 +71,7 @@ class BasicHTMLAccessibilityTests extends BaseTest
 	{
 		$unique_threshold_percent = 30;
 		
-		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content);
+		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content, 3, true, true);
 		
 		$total_words = $word_parser->get_word_count();
 		$total_unique_words = $word_parser->get_unique_word_count();
@@ -96,7 +96,7 @@ class BasicHTMLAccessibilityTests extends BaseTest
 		$words_under_average = 0;
 		$words_above_average = 0;
 		
-		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content);
+		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content, 1, true, false);
 		
 		$word_length_counts = $word_parser->get_word_length_counts();
 		
