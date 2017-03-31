@@ -12,6 +12,7 @@ Currently this is still in development, and some CSS & HTML tests are included:
 * Styling by ID check
 * Selector depth check (default depth limit is hard-coded to 3)
 * Use of `background` shorthand property
+* Use of `font` shorthand property
 * Use of the * key selector (default limit is hard-coded to 1)
 * Chained class selector check
 * Duplicate selectors check
