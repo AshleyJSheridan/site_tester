@@ -353,4 +353,52 @@ class BasicHTMLTests extends BaseTest
 			);
 		}
 	}
+	
+	public function test_open_graph_tags()
+	{
+		$open_graph_tag_count = 0;
+		$meta_tags = $this->parsed_content->getElementsByTagName('meta');
+		
+		foreach($meta_tags as $meta)
+		{
+			if($meta->hasAttribute('property') && preg_match('/^og\:(title|description|url|image|type)/', $meta->getAttribute('property') ) )
+				$open_graph_tag_count ++;
+		}
+		
+		if(!$open_graph_tag_count)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"The document does not appear to have Open Graph tags used for improving the appearance on social platforms when shared",
+					$this->content->get_url(),
+					'interest',
+					'warning'
+				)
+			);
+		}
+	}
+	
+	public function test_twitter_share_tags()
+	{
+		$twitter_share_tag_count = 0;
+		$meta_tags = $this->parsed_content->getElementsByTagName('meta');
+		
+		foreach($meta_tags as $meta)
+		{
+			if($meta->hasAttribute('name') && preg_match('/^twitter\:(title|description|site|image|card|domain|creator)/', $meta->getAttribute('name') ) )
+				$twitter_share_tag_count ++;
+		}
+		
+		if(!$twitter_share_tag_count)
+		{
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"The document does not appear to have Twitter share tags used for improving the appearance on Twitter when shared",
+					$this->content->get_url(),
+					'interest',
+					'warning'
+				)
+			);
+		}
+	}
 }
