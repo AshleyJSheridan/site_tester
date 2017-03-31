@@ -197,6 +197,46 @@ class BasicCSSTests extends BaseTest
 			);
 	}
 	
+	public function test_font_shorthand()
+	{
+		$background_shorthand_count = 0;
+		$rules = $this->parsed_content->getAllRuleSets();
+		
+		foreach($rules as $declaration_block)
+		{
+			$rule = $declaration_block->getRules()[0]->getRule();
+			
+			if($rule == 'font')
+			{
+				$background_shorthand_count ++;
+				
+				if($this->issues_list->get_verbose() )
+				{
+					$selector = $declaration_block->getRules()[0]->getSelector();
+					
+					$this->issues_list->add_issue(
+						new CSSIssue(
+							"font shorthand used in $selector",
+							$this->content->get_url(),
+							'maintainability',
+							'warning'
+						)
+					);
+				}
+			}
+		}
+		
+		if($background_shorthand_count)
+			$this->issues_list->add_issue(
+				new CSSIssue(
+					"$background_shorthand_count occurances of 'font' shorthand rule found",
+					$this->content->get_url(),
+					'maintainability',
+					'warning'
+				)
+			);
+	}
+	
 	public function test_key_selector_frequency()
 	{
 		$frequency_threshold = 1;
