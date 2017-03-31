@@ -18,10 +18,43 @@ abstract class BaseTest
 		$this->issues_list = $issues_list;
 	}
 
-	protected function get_test_methods()
+	private function get_test_methods()
 	{
 		$tests = preg_grep('/^test_/', get_class_methods($this) );
 		
 		return $tests;
+	}
+	
+	protected function run_test_methods(\Tester\WebContent\WebContent $content)
+	{
+		$test_methods = $this->get_test_methods();
+		
+		foreach($test_methods as $test_method)
+		{
+			$this->{$test_method}($content);
+		}
+	}
+	
+	protected function html_setup(\Tester\WebContent\WebContent $content)
+	{
+		$this->content = $content;
+		$this->parsed_content = new \DOMDocument();
+		
+		libxml_use_internal_errors(true);
+		$this->parsed_content->loadHTML($this->content);
+		libxml_use_internal_errors(false);
+	}
+	
+	protected function css_setup(\Tester\WebContent\WebContent $content)
+	{
+		$this->content = $content;
+		$parser = new \Sabberworm\CSS\Parser($content);
+		$this->parsed_content = $parser->parse();
+	}
+	
+	protected function css_cleanup()
+	{
+		$this->content = null;
+		$this->parsed_content = null;
 	}
 }

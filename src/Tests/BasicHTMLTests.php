@@ -14,19 +14,9 @@ class BasicHTMLTests extends BaseTest
 {
 	public function run_tests(\Tester\WebContent\WebPageContent $content)
 	{
-		$this->content = $content;
-		$this->parsed_content = new \DOMDocument();
+		$this->html_setup($content);
 		
-		libxml_use_internal_errors(true);
-		$this->parsed_content->loadHTML($this->content);
-		libxml_use_internal_errors(false);
-		
-		$test_methods = $this->get_test_methods();
-		
-		foreach($test_methods as $test_method)
-		{
-			$this->{$test_method}($content);
-		}
+		$this->run_test_methods($content);
 	}
 	
 	public function test_size()

@@ -16,19 +16,11 @@ class BasicCSSTests extends BaseTest
 {
 	public function run_tests(\Tester\WebContent\CSSWebContent $content)
 	{
-		$this->content = $content;
-		$parser = new \Sabberworm\CSS\Parser($content);
-		$this->parsed_content = $parser->parse();
+		$this->css_setup($content);
 		
-		$test_methods = $this->get_test_methods();
-		
-		foreach($test_methods as $test_method)
-		{
-			$this->{$test_method}($content);
-		}
+		$this->run_test_methods($content);
 
-		$this->content = null;
-		$this->parsed_content = null;
+		$this->css_cleanup();
 	}
 	
 	public function test_size()
