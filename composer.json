@@ -10,7 +10,8 @@
 		}
 	],
 	"require": {
-		"sabberworm/php-css-parser": "*"
+		"sabberworm/php-css-parser": "*",
+		"davechild/textstatistics": "1.*"
 	},
 	"autoload": {
 		"psr-4": {

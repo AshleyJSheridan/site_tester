@@ -2,6 +2,7 @@
 namespace Tester\Tests;
 
 use Tester\Entities\HTMLIssue;
+use DaveChild\TextStatistics;
 
 /**
  * Description of BasicHTMLAccessibilityTests
@@ -171,6 +172,41 @@ class BasicHTMLAccessibilityTests extends BaseTest
 						)
 					);
 				}
+			}
+		}
+	}
+	
+	public function test_readability()
+	{
+		// https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests
+		$textStatistics = new TextStatistics\TextStatistics;
+		$hard_threshold = 60;
+		$very_hard_threshold = 30;
+		
+		$reading_ease = $textStatistics->fleschKincaidReadingEase($this->content->get_content() );
+		
+		if($reading_ease < $hard_threshold)
+		{
+			if($reading_ease < $very_hard_threshold)
+			{
+				$this->issues_list->add_issue(
+					new HTMLIssue(
+						"The reading ease for this page is under $very_hard_threshold, which is very difficult to read",
+						$this->content->get_url(),
+						'accessibility'
+					)
+				);
+			}
+			else
+			{
+				$this->issues_list->add_issue(
+					new HTMLIssue(
+						"The reading ease for this page is under $hard_threshold, which is slightly difficult to read",
+						$this->content->get_url(),
+						'accessibility',
+						'warning'
+					)
+				);
 			}
 		}
 	}

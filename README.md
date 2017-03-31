@@ -29,3 +29,7 @@ Currently this is still in development, and some CSS & HTML tests are included:
 * Identify repetition of words in content above threshold (defaults to 30%)
 * Identify frequency of words above an average word length (average defaults to 5.1 https://arxiv.org/pdf/1208.6109.pdf)
 * Tests for presence of old style bold and italic tags in content
+* Tests for the apparent age of the page based on either Last-Modified header or Dublin Core metadata
+* Check for presence of Open Graph meta tags for social sharing
+* Check for presence of Twitter social sharing meta tags
+* Check the reading ease level of the content

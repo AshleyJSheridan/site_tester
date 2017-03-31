@@ -53,6 +53,13 @@ class ComposerStaticInit6a5f39cb85dc25a01bcc23460d239221
                 0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
             ),
         ),
+        'D' => 
+        array (
+            'DaveChild\\TextStatistics' => 
+            array (
+                0 => __DIR__ . '/..' . '/davechild/textstatistics/src',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
+    'DaveChild\\TextStatistics' => array($vendorDir . '/davechild/textstatistics/src'),
 );
