@@ -19,18 +19,11 @@ class ResourceLister
 		{
 			foreach($matches[1] as $css_link)
 			{
-				if(preg_match('/^https?\:\/\//', $css_link) )
-				{
-					$css_list->push(new \Tester\WebContent\CSSWebContent($css_link) );
-				}
-				else
-				{
-					$divider = substr($css_link, 0, 1) == '/'?'':'/';
-					$css_list->push(new \Tester\WebContent\CSSWebContent($base_url . $divider . $css_link) );
-				}
+				$full_css_link = self::get_full_url_path($css_link, $base_url);
+				$css_list->push(new \Tester\WebContent\CSSWebContent($full_css_link) );
 			}
 		}
-		
+
 		return $css_list;
 	}
 	
@@ -57,5 +50,48 @@ class ResourceLister
 		}
 		
 		return $js_list;
+	}
+	
+	public static function get_full_url_path($url, $base_url)
+	{
+		if(preg_match('/^https?\:\/\//', $url) )
+			return $url;
+		
+		if(preg_match('/^\/\/[^\/]/', $url) )
+		{
+			$protocol = parse_url($base_url, PHP_URL_SCHEME);
+			
+			return "$protocol:$url";
+		}
+		
+		if(preg_match('/^\/[^\/]/', $url) )
+		{
+			$protocol = parse_url($base_url, PHP_URL_SCHEME);
+			$domain = parse_url($base_url, PHP_URL_HOST);
+			$port = parse_url($base_url, PHP_URL_PORT);
+			$user = parse_url($base_url, PHP_URL_USER);
+			$pass = parse_url($base_url, PHP_URL_PASS);
+			
+			$full_url = $protocol . '://';
+			
+			if($user)
+			{
+				$full_url .= $user;
+				
+				if($pass)
+					$full_url .= ":$pass";
+				
+				$full_url .= '@';
+			}
+			
+			$full_url .= $domain;
+			
+			if($port)
+				$full_url .= ":$port";
+			
+			$full_url .= $url;
+			
+			return $full_url;
+		}
 	}
 }
