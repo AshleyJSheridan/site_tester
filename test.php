@@ -4,7 +4,7 @@ $loader = require __DIR__ . '/vendor/autoload.php';
 
 date_default_timezone_set('UTC');
 
-$url = 'http://www.ashleysheridan.co.uk/blog/Manual+Vs+Automated+Testing';
+$url = 'http://www.ashleysheridan.co.uk/blog';
 
 // get remote page and linked content
 $page = new \Tester\WebContent\WebPageContent($url);
@@ -13,7 +13,7 @@ $page = new \Tester\WebContent\WebPageContent($url);
 $issues = new \Tester\ContentLists\IssuesList(false);
 
 $test_class_searcher = new \Tester\Helpers\TestClassSearcher();
-$test_class_searcher->run_css_tests($page->get_css_links(), $issues);
+//$test_class_searcher->run_css_tests($page->get_css_links(), $issues);
 $test_class_searcher->run_html_tests($page, $issues);
 
 

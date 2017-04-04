@@ -39,6 +39,7 @@ abstract class BaseTest
 	{
 		$this->content = $content;
 		$this->parsed_content = new \DOMDocument();
+		$this->dictionary = \pspell_new('en', '', '', '', PSPELL_FAST);
 		
 		libxml_use_internal_errors(true);
 		$this->parsed_content->loadHTML($this->content);

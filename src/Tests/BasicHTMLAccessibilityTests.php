@@ -210,4 +210,24 @@ class BasicHTMLAccessibilityTests extends BaseTest
 			}
 		}
 	}
+	
+	public function test_spelling()
+	{
+		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content, 3, true, true);
+		$error_words = [];
+		
+		$all_words = $word_parser->get_words();
+		
+		foreach($all_words as $word => $total_usages)
+		{
+			// only check things that could be valid words
+			if(preg_match('/^[\pL\-]+$/u', $word) )
+			{
+				if(!pspell_check($this->dictionary, $word) )
+					$error_words[] = $word;
+			}
+		}
+		var_dump($error_words);
+		//var_dump($pspell);
+	}
 }

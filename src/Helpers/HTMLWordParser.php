@@ -34,6 +34,11 @@ class HTMLWordParser
 		return $this->words->get_word_lengths();
 	}
 	
+	public function get_words()
+	{
+		return $this->words->get_words();
+	}
+	
 	private function parse_content()
 	{
 		$xp    = new \DOMXPath($this->dom_content);
@@ -48,8 +53,10 @@ class HTMLWordParser
 			$words = explode(' ', $sentence);
 			
 			foreach($words as $word)
+			{
+				$word = trim(str_replace(array("\n", "\r"), ' ', $word) );
 				$this->words->add_increment_word_usage_total($word);
-
+			}
 		}
 	}
 }

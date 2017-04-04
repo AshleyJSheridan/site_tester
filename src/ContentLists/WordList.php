@@ -56,6 +56,11 @@ class WordList
 		return $lengths;
 	}
 	
+	public function get_words()
+	{
+		return $this->words;
+	}
+	
 	public function get_total_words_in_list()
 	{
 		return $this->total;
