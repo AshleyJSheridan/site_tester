@@ -311,7 +311,7 @@ class BasicHTMLTests extends BaseTest
 	
 	public function test_page_age()
 	{
-		$recent_threshold_days = 30;
+		$recent_threshold_days = 14;
 		$recent_threshold = 60 * 60 * 24 * $recent_threshold_days;
 		$last_modified = strtotime($this->content->get_header('Last-Modified') );
 
@@ -328,8 +328,8 @@ class BasicHTMLTests extends BaseTest
 					$last_modified = strtotime($meta->getAttribute('content') );
 			}
 		}
-		
-		if(!$last_modified || (time() - $last_modified) < $recent_threshold)
+
+		if(!$last_modified || (time() - $last_modified) > $recent_threshold)
 		{
 			$apparent_age = date("Y-m-d H:i:s", $last_modified);
 			
