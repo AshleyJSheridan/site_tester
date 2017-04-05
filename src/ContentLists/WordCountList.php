@@ -6,7 +6,7 @@ namespace Tester\ContentLists;
  *
  * @author Ashley Sheridan
  */
-class WordList
+class WordCountList
 {
 	private $words = [];
 	private $word_lengths = [];

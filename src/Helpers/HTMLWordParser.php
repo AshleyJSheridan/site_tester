@@ -14,7 +14,7 @@ class HTMLWordParser
 	public function __construct(\DOMDocument $dom_content, $min_word_length = 3, $remove_punctuation = false, $remove_stop_words = true)
 	{
 		$this->dom_content = $dom_content;
-		$this->words = new \Tester\ContentLists\WordList($min_word_length, $remove_punctuation, $remove_stop_words);
+		$this->words = new \Tester\ContentLists\WordCountList($min_word_length, $remove_punctuation, $remove_stop_words);
 		
 		$this->parse_content();
 	}
