@@ -44,13 +44,14 @@ class HTMLWordParser
 		$xp    = new \DOMXPath($this->dom_content);
 		$nodes = $xp->query('/html/body//text()[
 			not(ancestor::script) and
+			not(ancestor::code) and
 			not(normalize-space(.) = "")
 		]');
 
 		foreach($nodes as $node)
 		{
 			$sentence = $node->textContent;
-			$words = explode(' ', $sentence);
+			$words = preg_split('[ \-\.,;:]', $sentence);
 			
 			foreach($words as $word)
 			{
