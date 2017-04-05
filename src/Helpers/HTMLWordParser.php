@@ -51,7 +51,7 @@ class HTMLWordParser
 		foreach($nodes as $node)
 		{
 			$sentence = $node->textContent;
-			$words = preg_split('[ \-\.,;:]', $sentence);
+			$words = preg_split('/[ \-\.,;:\?\!…\(\)\'"\/\\\]/', $sentence);
 			
 			foreach($words as $word)
 			{
