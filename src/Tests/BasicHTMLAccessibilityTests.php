@@ -213,21 +213,59 @@ class BasicHTMLAccessibilityTests extends BaseTest
 	
 	public function test_spelling()
 	{
-		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content, 3, true, true);
+		$word_parser = new \Tester\Helpers\HTMLWordParser($this->parsed_content, 3, false, true);
 		$error_words = [];
+		$name_words = [];
+		$acronym_words = [];
 		
 		$all_words = $word_parser->get_words();
 		
-		foreach($all_words as $word => $total_usages)
+		foreach(array_keys($all_words) as $word)
 		{
-			// only check things that could be valid words
-			if(preg_match('/^[\pL\-]+$/u', $word) )
+			// only check things that could be valid words - hyphenated ones should already be split out
+			if(preg_match('/^\pL[\pL\pN\']+$/u', $word) )
 			{
 				if(!pspell_check($this->dictionary, $word) )
-					$error_words[] = $word;
+				{
+					if(preg_match('/^\p{Lu}+$/u', $word) )
+						$acronym_words[] = $word;
+					else if(preg_match('/^[\p{Lt}\p{Lu}]/u', $word) )
+						$name_words[] = $word;
+					else
+						$error_words[] = $word;
+					
+				}
 			}
 		}
-		var_dump($error_words);
+		
+		$error_word_count = count($error_words);
+		if($error_word_count)
+		{
+			
+			$this->issues_list->add_issue(
+				new HTMLIssue(
+					"There appear to be $error_word_count spelling errors on this page",
+					$this->content->get_url(),
+					'accessibility',
+					'warning'
+				)
+			);
+			
+			if($this->issues_list->get_verbose() )
+			{
+				foreach($error_words as $word)
+				{
+					$this->issues_list->add_issue(
+						new HTMLIssue(
+							"\"$word\" does not appear to be a correctly spelled word",
+							$this->content->get_url(),
+							'accessibility',
+							'warning'
+						)
+					);
+				}
+			}
+		}
 		//var_dump($pspell);
 	}
 }
